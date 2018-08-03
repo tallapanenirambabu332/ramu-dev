@@ -1,0 +1,10 @@
+stages:
+  - build
+  - deploy
+
+job 1:
+  stage: build
+  script: tallapanenirambabu332/ramu-dev/cloudbuild.yml
+job 2:
+  stage: deploy
+  script:cluster-1
