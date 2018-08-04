@@ -1,9 +1,10 @@
  deploy_to_k8:
     title: deploying to cluster
-    kind: kubernetes 
+    type: deploy
+    kind: pods
     cluster: cluster-1@version-container
     namespace: default
-    service: kubernetes 
+    service: gcp 
     file_path: ./deployment.yml
     timeout: 150
     candidate:  
