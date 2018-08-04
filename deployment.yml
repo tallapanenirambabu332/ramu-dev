@@ -17,5 +17,6 @@ spec:
       containers:
       - name: nginx
         image: ${{BuildImage}}
+        registry: 'dockerhub'
         ports:
         - containerPort: 80
