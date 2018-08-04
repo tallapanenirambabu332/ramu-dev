@@ -1,17 +1,11 @@
-deploy:
-    title: deploying to cluster
-    type: pods
+ RunningDeployScript:
+    title: Running Deploy Script
+    type: deploy
     kind: kubernetes
     cluster: cluster-1@version-container
-    namespace: default
-    service: nginx
-    file_path: ./deployment.yml
-    timeout: 1500
+    namespace: default  
+    service: gcp 
     candidate:
-      image: ${{build_step}}
-      registry: Codefresh Docker Registry
-    when:
-      branch:
-        only:
-          - live
+      image: '${{BuildImage}}'
+      registry: 'dockerhub'
                 
