@@ -1,6 +1,5 @@
  deploy_to_k8:
     title: deploying to cluster
-    type: deploy
     kind: pod 
     cluster: cluster-1@version-container
     namespace: default
