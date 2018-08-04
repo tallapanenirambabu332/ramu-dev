@@ -1,6 +1,6 @@
  deploy_to_k8:
     title: deploying to cluster
-    kind: pod 
+    kind: kubernetes 
     cluster: cluster-1@version-container
     namespace: default
     service: kubernetes 
