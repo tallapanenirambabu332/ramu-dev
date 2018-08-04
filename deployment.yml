@@ -1,5 +1,4 @@
- RunningDeployScript:
-    title: Running Deploy Script
+ title: Running Deploy Script
     type: deploy
     kind: kubernetes
     cluster: cluster-1@version-container
