@@ -14,4 +14,4 @@ deploy_to_k8:
       branch:
         only:
           - live
-~                
+                
