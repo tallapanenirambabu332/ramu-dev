@@ -1,0 +1,64 @@
+---
+kind: Service
+apiVersion: v1
+metadata:
+  name: dep1
+spec:
+  selector:
+    app: version-1
+  ports:
+  - protocol: TCP
+    port: 80
+    targetPort: 80
+   type: LoadBalancer
+---
+kind: Service
+apiVersion: v1
+metadata:
+  name: dep2
+spec:
+  selector:
+    app: version-2
+  ports:
+  - protocol: TCP
+    port: 80
+    targetPort: 80
+   type: LoadBalancer
+   
+   ---
+   apiVersion: v1
+kind: Deployment
+metadata:
+  name: dep1
+  labels:
+    app: version-1
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: version-1
+    spec:
+      containers:
+      - name: testenv
+        image: tallapaneni/versions:7bab2c0
+        ports:
+        - containerPort: 80
+---
+   apiVersion: v1
+kind: Deployment
+metadata:
+  name: dep2
+  labels:
+    app: version-2
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: version-2
+    spec:
+      containers:
+      - name: testenv
+        image: tallapaneni/versions:224bdf5
+        ports:
+        - containerPort: 80
+        
