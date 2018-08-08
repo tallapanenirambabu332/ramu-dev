@@ -1,0 +1,9 @@
+steps:
+
+- name: 'gcr.io/cloud-builders/git'
+
+  args: ['clone', 'https://github.com/tallapanenirambabu332/ramu-dev/.git']
+
+- name: 'gcr.io/cloud-builders/docker'
+
+  args: ['build', '-t', 'gcr.io/version-container-version-container/myimage', '.']
