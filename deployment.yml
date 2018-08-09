@@ -1,10 +1,10 @@
 
-apiVersion: v1
+apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: dep1
+  name: nginx7
   labels:
-    app: version-1
+    app: ngnix-v1
 spec:
   replicas: 1
   selector:
