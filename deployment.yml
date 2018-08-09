@@ -10,6 +10,10 @@ spec:
   selector:
     matchLabels:
       app: version-1
+  template:
+    metadata:
+      labels:
+        app: nginx-v1
     spec:
       containers:
       - name: testenv
