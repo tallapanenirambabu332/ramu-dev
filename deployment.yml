@@ -16,7 +16,7 @@ spec:
         app: nginx-v1
     spec:
       containers:
-      - name: testenv
+      - name: nginx-v1
         image: tallapaneni/versions: latest
         ports:
         - containerPort: 80
