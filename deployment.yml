@@ -17,6 +17,20 @@ spec:
     spec:
       containers:
       - name: testenv
-        image: tallapaneni/versions:latest
+        image: tallapaneni/versions: latest
         ports:
         - containerPort: 80
+---
+
+kind: Service
+apiVersion: v1
+metadata:
+  name: nginx9
+spec:
+  selector:
+    app: nginx-v1
+  ports:
+  - protocol: TCP
+    port: 80
+    targetPort: 80
+
