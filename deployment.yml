@@ -2,7 +2,7 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: nginx10
+  name: nginx11
   labels:
     app: ngnix-v1
 spec:
