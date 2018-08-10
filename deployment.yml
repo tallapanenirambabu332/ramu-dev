@@ -2,7 +2,7 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: nginx7
+  name: nginx8
   labels:
     app: ngnix-v1
 spec:
@@ -17,6 +17,6 @@ spec:
     spec:
       containers:
       - name: testenv
-        image: tallapaneni/versions:test
+        image: tallapaneni/versions:latest
         ports:
         - containerPort: 80
