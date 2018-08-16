@@ -1,19 +1,20 @@
 
+
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: nginx12
+  name: dev-${GIT_COMMIT}
   labels:
-    app: nginx-v1
+    app: dev-${GIT_COMMIT}
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: nginx-v1
+      app: dev-${GIT_COMMIT}
   template:
     metadata:
       labels:
-        app: nginx-v1
+        app: dev-${GIT_COMMIT}
     spec:
       containers:
       - name: nginx-v3
@@ -25,12 +26,11 @@ spec:
 kind: Service
 apiVersion: v1
 metadata:
-  name: nginx-v2
+  name: dev-${GIT_COMMIT}
 spec:
   selector:
-    app: nginx-v1
+    app: dev-${GIT_COMMIT}
   ports:
   - protocol: TCP
     port: 80
     targetPort: 80
-
