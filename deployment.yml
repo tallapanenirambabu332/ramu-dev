@@ -17,7 +17,7 @@ spec:
     spec:
       containers:
       - name: nginx-v3
-        image: tallapaneni/versions:${GIT_COMMIT}
+        image: tallapaneni/versions:test
         ports:
         - containerPort: 80
 ---
