@@ -17,7 +17,7 @@ spec:
     spec:
       containers:
       - name: nginx-v1
-        image: tallapaneni/versions:latest
+        image: {{IMAGE_SHA}}
         ports:
         - containerPort: 80
 ---
