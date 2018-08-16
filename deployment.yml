@@ -2,7 +2,7 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: nginx11
+  name: nginx12
   labels:
     app: ngnix-v1
 spec:
@@ -17,7 +17,7 @@ spec:
     spec:
       containers:
       - name: nginx-v2
-        image: ${GIT_COMMIT}
+        image: {{GIT_COMMIT}}
         ports:
         - containerPort: 80
 ---
