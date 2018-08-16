@@ -25,7 +25,7 @@ spec:
 kind: Service
 apiVersion: v1
 metadata:
-  name: nginx-v1
+  name: nginx-v2
 spec:
   selector:
     app: nginx-v1
