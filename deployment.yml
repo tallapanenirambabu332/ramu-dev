@@ -4,7 +4,7 @@ kind: Deployment
 metadata:
   name: nginx12
   labels:
-    app: test
+    app: nginx-v1
 spec:
   replicas: 1
   selector:
@@ -25,7 +25,7 @@ spec:
 kind: Service
 apiVersion: v1
 metadata:
-  name: nginx11
+  name: nginx-v1
 spec:
   selector:
     app: nginx-v1
