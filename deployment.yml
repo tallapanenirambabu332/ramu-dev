@@ -17,7 +17,7 @@ spec:
     spec:
       containers:
       - name: nginx-v2
-        image: {{IMAGE_URL}}
+        image: ${GIT_COMMIT}
         ports:
         - containerPort: 80
 ---
