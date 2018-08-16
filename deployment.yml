@@ -4,7 +4,7 @@ kind: Deployment
 metadata:
   name: nginx12
   labels:
-    app: ngnix-v1
+    app: test
 spec:
   replicas: 1
   selector:
