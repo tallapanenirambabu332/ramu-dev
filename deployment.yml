@@ -17,7 +17,7 @@ spec:
     spec:
       containers:
       - name: nginx-v2
-        image: {{IMAGE_SHA}}
+        image: {{IMAGE_URL}}
         ports:
         - containerPort: 80
 ---
