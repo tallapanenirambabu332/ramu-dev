@@ -16,7 +16,7 @@ spec:
         app: nginx-v1
     spec:
       containers:
-      - name: nginx-v1
+      - name: nginx-v2
         image: {{IMAGE_SHA}}
         ports:
         - containerPort: 80
