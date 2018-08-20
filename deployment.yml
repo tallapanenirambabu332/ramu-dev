@@ -3,7 +3,7 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: dev-ram-2
+  name: dev-ram-3
   labels:
     app: dev-ram
 spec:
