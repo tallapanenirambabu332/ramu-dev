@@ -17,8 +17,8 @@ spec:
         app: dev-ram
     spec:
       containers:
-      - name: nginx-v3
-        image: nginx:latest
+      - name: ramu
+        image: tallapaneni/versions:${GIT_BRANCH}-${GIT_COMMIT}
         ports:
         - containerPort: 80
 ---
