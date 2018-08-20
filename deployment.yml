@@ -3,18 +3,18 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: dev-${GIT_COMMIT}.
+  name: dev-ram
   labels:
-    app: dev-${GIT_COMMIT}.
+    app: dev-ram
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: dev-${GIT_COMMIT}.
+      app: dev-ram
   template:
     metadata:
       labels:
-        app: dev-${GIT_COMMIT}.
+        app: dev-ram
     spec:
       containers:
       - name: nginx-v3
@@ -26,10 +26,10 @@ spec:
 kind: Service
 apiVersion: v1
 metadata:
-  name: dev-${GIT_COMMIT}.
+  name: dev-ram
 spec:
   selector:
-    app: dev-${GIT_COMMIT}.
+    app: dev-ram
   ports:
   - protocol: TCP
     port: 80
