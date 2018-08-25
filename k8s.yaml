@@ -1,0 +1,4 @@
+Kind: Deployment
+metadata:
+  name: {{deploy_name}}
+  test: {{name}}
