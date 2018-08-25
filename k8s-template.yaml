@@ -1,7 +1,7 @@
 Kind: Deployment
 metadata:
   name: {{deploy_name}}
-  test: {{name}
+  test: {{name}}
   git_branch: {{ git_branch }}
   git_hash: {{ git_hash }}
   domain_prefix: {{ domain_prefix }} 
