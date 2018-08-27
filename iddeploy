@@ -1,0 +1,148 @@
+import argparse
+import subprocess
+import sys
+import os
+import shutil
+import random
+import pprint
+from jinja2 import Environment
+from jinja2 import FileSystemLoader
+
+# You can use a library method if using python3
+def get_cmd_op(cmd):
+    return subprocess.Popen(cmd, stdout=subprocess.PIPE,shell=True).stdout.readline().rstrip()
+
+def run_cmd(cmd,prefix='',suffix=''):
+  handle = subprocess.Popen(cmd, shell=True, stderr=subprocess.STDOUT, stdout=subprocess.PIPE)
+  while True:
+    line = handle.stdout.readline();
+    if line == '' and handle.poll() is not None:
+      break
+    if line:
+      print prefix + line.rstrip() + suffix
+  rc = handle.poll()
+  if rc != 0:
+    print "ERROR: %s : Failed with rc=%s" % (cmd,rc)
+    sys.exit(rc)  #TODO chnage to an exception
+
+def git_checkout(args):
+
+    # git clone url -b branch temp_folder
+    cmd_string = "git clone "+GIT_URL+"/"+args.client+".git"+" -b "+ args.git_branch+" "
+    print "INFO: Git checkout : " + cmd_string
+    run_cmd(cmd_string)
+    os.chdir(args.client)
+
+    # (Optional) git checkout -f git_hash
+    if args.git_hash != 'latest':
+        print "INFO: Git checkout hash : " + args.git_hash
+        cmd_string = "git checkout -f "+ args.git_hash
+        run_cmd(cmd_string)
+
+    git_hash=get_cmd_op("git rev-parse HEAD")
+    build_tag = args.git_branch+"-"+git_hash
+    args.build_tag = build_tag
+
+    return args
+
+def docker_build_push(args):
+    print "INFO: Attempting to build docker image with tag : "+args.build_tag
+    args.image = DOCKER_REGISTRY+"/"+GCP_PROJECT+"/"+args.client+":"+args.build_tag
+    if not os.path.isfile('Dockerfile'):
+        print "ERROR: no docker file found at : "+ get_cmd_op("pwd")
+        print "ERROR: Please add Dockerfile to your git branch"
+        sys.exit(-1)
+    run_cmd("docker build . -t "+args.image)
+    run_cmd("gcloud auth print-access-token | docker login -u oauth2accesstoken --password-stdin "+DOCKER_HOST)
+    run_cmd("docker push "+args.image)
+    return args
+
+def kube_deploy(args):
+    # take template, make k8s deploy, service, ingress
+    # args.endpoint = filled value from ingress
+    if not os.path.isfile(K8S_DEPLOY_TEMPLATE):
+        print "ERROR: no deploy file found at : "+ get_cmd_op("pwd")
+        print "ERROR: Please add Dockerfile to your git branch"
+        sys.exit(-1)
+
+    j2_env = Environment(loader=FileSystemLoader('.'),trim_blocks=True)
+    template = j2_env.get_template(K8S_DEPLOY_TEMPLATE)
+
+    rendered_template = template.render(client=args.client, git_hash=args.git_hash,git_branch=args.git_branch,domain_prefix=args.domain_prefix)
+    with open('k8s.yaml', 'w') as f:
+        f.write(rendered_template)
+
+    run_cmd("kubectl apply -f k8s.yaml")
+
+def validate_deploy(args):
+    #ehck if args.endpoint is resolving to valid IP
+    #curl endpoint/healthy to find out
+    print "INFO: validate_deploy"
+
+
+#config values
+GIT_URL = "git@github.com:tallapanenirambabu332"
+DOCKER_HOST='https://gcr.io'
+GCP_PROJECT = 'projectkube-211818'
+DOCKER_REGISTRY = "gcr.io"+"/"+GCP_PROJECT
+DOMAIN = 'imeptusgcp.com'
+K8S_DEPLOY_TEMPLATE = 'k8s-template.yaml'
+
+def read_config(args):
+    toolenv = {}
+    #read file and fill in toolenv
+    toolenv.git_url=''
+
+
+def main():
+    ## parse args
+    parser = argparse.ArgumentParser(description='Impetus cmdline tool for deploying client containers to cloud')
+
+    parser.add_argument('action',choices=['deploy', 'init', 'scissors'],help='specify the action')
+    parser.add_argument('client', help='specify list of clients to apply action upon')
+    parser.add_argument('git_branch', help='git branch to use for the action')
+    parser.add_argument('git_hash', help='the hash to checkout on the branch. Default latest')
+    parser.add_argument('domain_prefix',help='dns prefix to use. Deployment will be exposed at dns_prefix.<domain>')
+    parser.add_argument('--nocleanup',help='dont cleanup workspace',action='store_true')
+
+    args = parser.parse_args()
+
+    #create a workspace and switch to it
+    workspace = args.client+"-"+str(random.randint(1,1000)) #TODO change random number to date in format (20180603235801)
+    if not os.path.exists(workspace):
+        os.makedirs(workspace)
+    print "INFO: using workspace : "+workspace
+    os.chdir(workspace)
+
+    if args.action == 'deploy':
+        deploy(args)
+
+    if args.action == 'init':
+        init()
+        return
+
+    #cleanup
+    if not args.nocleanup:
+        print "INFO: cleaning up workspace : "+workspace
+        os.chdir("../..")
+        shutil.rmtree(workspace)
+    else:
+        print "INFO: workspace is not cleanedup : " + get_cmd_op("pwd")
+
+def init():
+    print "INFO: checking git"
+    run_cmd('git --version')
+    print "INFO: checking docker"
+    run_cmd('docker --version')
+    print "INFO: checking gcloud"
+    run_cmd('gcloud --version')
+
+def deploy(args):
+    print "INFO: starting Deployment : %s" % (args.client)
+    args=git_checkout(args)
+    args=docker_build_push(args)
+    kube_deploy(args)
+
+if __name__ == '__main__':
+    main()
+
