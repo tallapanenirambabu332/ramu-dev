@@ -16,7 +16,7 @@ spec:
       spec:
           containers:
           - name: ramu
-            image: gcr.io/projectkube-211818/projectkube-211818:{{git_branch}}-{{git_hash}}
+            image: gcr.io/projectkube-211818/projectkube-211818/ramu-dev:{{git_branch}}-{{git_hash}}
             ports:
               - containerPort: 80
 ---
