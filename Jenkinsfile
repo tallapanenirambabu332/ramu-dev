@@ -1,10 +1,5 @@
 pipeline {
-  agent { label 'docker' }
-  options {
-    buildDiscarder(logRotator(numToKeepStr: '5'))
-  }
-  triggers {
-    cron('@daily')
+  agent {  'docker' }
   }
   stages {
     stage('Build') {
