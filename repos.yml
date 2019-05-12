@@ -1,5 +1,5 @@
 
-name: "vault-sandbox"
-name: "CDPipeline"
-name: "test-angular-app"
-name: "jenkins-pipelines-mgmt"
+name1: "vault-sandbox"
+name2: "CDPipeline"
+name3: "test-angular-app"
+name4: "jenkins-pipelines-mgmt"
