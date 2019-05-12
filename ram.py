@@ -9,6 +9,6 @@ def parseYaml():
     i+=1
     repos_list.insert(i,value)
     print(repos_list)
-    return repos_list
+  return repos_list
 repositories = parseYaml()
 print(repositories)
