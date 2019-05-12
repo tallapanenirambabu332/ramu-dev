@@ -8,3 +8,4 @@ for key, value in yaml.load(open(input_file)).items():
   i+=1
   repos_list.insert(i,value)
   print(repos_list)
+  return repos_list
