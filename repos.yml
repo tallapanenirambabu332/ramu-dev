@@ -1,4 +1,5 @@
-repo1: "vault-sandbox"
-repo2: "CDPipeline"
-repo3: "test-angular-app"
-repo4: "jenkins-pipelines-mgmt"
+repos: 
+name: "vault-sandbox"
+name: "CDPipeline"
+name: "test-angular-app"
+nmae: "jenkins-pipelines-mgmt"
