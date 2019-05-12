@@ -1,4 +1,4 @@
-repos: 
+repos_list: 
 name: "vault-sandbox"
 name: "CDPipeline"
 name: "test-angular-app"
