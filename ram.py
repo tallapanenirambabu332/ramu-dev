@@ -10,5 +10,6 @@ def parseYaml():
     repos_list.insert(i,value)
     #print(repos_list)
   return repos_list
-repositories = parseYaml()
-print(repositories)
+#repositories = parseYaml()
+parseYaml()
+#print(repositories)
