@@ -9,7 +9,10 @@ def parseYaml():
     i+=1
     repos_list.insert(i,value)
     #print(repos_list)
-  return repos_list
+  #return repos_list
+  Outfile=open("output.txt","w+")
+  Outfile.write(repos_list)
+  Outfile.close()
 #repositories = parseYaml()
 parseYaml()
 #print(repositories)
